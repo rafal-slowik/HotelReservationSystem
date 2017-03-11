@@ -1,7 +1,7 @@
 package booking.manager;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
-import static booking.properties.ExceptionMessagesKeys.EXC_MSG_ROOM_ALREADY_BOOKED;
+import static booking.properties.ExceptionMessagesKeys.*;
 import static booking.repository.NonDbRepository.getRepositoryInstance;
 
 import java.time.LocalDate;
@@ -34,8 +34,8 @@ public class BookingManagerImpl implements BookingManager {
 	 */
 	@Override
 	public boolean isRoomAvailable(Integer room, LocalDate date) throws NoSuchRoomException {
-		Preconditions.checkNotNull(room);
-		Preconditions.checkNotNull(date);
+		Preconditions.checkNotNull(room, getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given room number"));
+		Preconditions.checkNotNull(date, getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given date"));
 		return repository.isRoomAvailable(room, date);
 	}
 
@@ -48,7 +48,8 @@ public class BookingManagerImpl implements BookingManager {
 	@Override
 	public synchronized void addBooking(String guest, Integer room, LocalDate date)
 			throws NoSuchRoomException, RoomAlreadyBookedException {
-		Preconditions.checkNotNull(guest);
+		Preconditions.checkNotNull(guest,
+				getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Guest name"));
 		synchronized (lock) {
 			if (!isRoomAvailable(room, date)) {
 				throw new RoomAlreadyBookedException(
@@ -66,7 +67,7 @@ public class BookingManagerImpl implements BookingManager {
 	 */
 	@Override
 	public Iterable<Integer> getAvailableRooms(LocalDate date) {
-		Preconditions.checkNotNull(date);
+		Preconditions.checkNotNull(date, getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given date"));
 		return repository.getAvailableRooms(date);
 	}
 }

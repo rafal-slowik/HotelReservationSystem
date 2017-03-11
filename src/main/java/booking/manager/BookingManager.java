@@ -22,6 +22,10 @@ public interface BookingManager {
 	 *            - date of availability to be checked. <b>Must not be null</b>
 	 * @return true if there is no booking for the given room on the date,
 	 *         otherwise false.
+	 * @throws NullPointerException
+	 *             if any of the input parameters equal {@code null}
+	 * @throws NoSuchRoomException
+	 *             if the given room number doesn't exist
 	 */
 	public boolean isRoomAvailable(Integer room, LocalDate date) throws NoSuchRoomException;
 
@@ -30,11 +34,18 @@ public interface BookingManager {
 	 * the room is not available, throw a suitable exception.
 	 * 
 	 * @param guest
-	 *            - guest surname. <b>Must not be null</b>
+	 *            - guest surname
 	 * @param room
-	 *            - room number. <b>Must not be null</b>
+	 *            - room number
 	 * @param date
-	 *            - booking date. <b>Must not be null</b>
+	 *            - booking date
+	 *            
+	 * @throws NullPointerException
+	 *             if any of the input parameters equal {@code null}
+	 * @throws NoSuchRoomException
+	 *             if the given room number doesn't exist
+	 * @throws RoomAlreadyBookedException
+	 *             when the given room number is already booked on given date
 	 */
 	public void addBooking(String guest, Integer room, LocalDate date)
 			throws NoSuchRoomException, RoomAlreadyBookedException;
@@ -44,6 +55,9 @@ public interface BookingManager {
 	 * @param date
 	 *            - availability date. <b>Must not be null</b>
 	 * @return a list of all the available room numbers for the given date.
+	 * 
+	 * @throws NullPointerException
+	 *             if the {@code date} parameters equals {@code null}
 	 */
 	public Iterable<Integer> getAvailableRooms(LocalDate date);
 }
