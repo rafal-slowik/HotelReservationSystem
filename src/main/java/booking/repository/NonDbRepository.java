@@ -4,6 +4,7 @@
 package booking.repository;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
+import static booking.properties.ExceptionMessagesKeys.EXC_MSG_ROOM_DOES_NOT_EXIST;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 
 import booking.entity.Booking;
 import booking.exception.NoSuchRoomException;
-import booking.exception.RoomAlreadyBookedException;
 
 /**
  * @author Rafal Slowik
@@ -33,14 +33,8 @@ public class NonDbRepository implements Repository {
 
 	private void init() {
 		String roomsToParse = getConfigInstance().findByKey("rooms");
-		int[] availableRooms = parseStringOfInts(roomsToParse);
-		for (Integer room : availableRooms) {
-			bookingMap.put(room, new HashSet<>());
-		}
-	}
-
-	private int[] parseStringOfInts(String line) {
-		return Arrays.stream(line.split(",")).map(String::trim).mapToInt(Integer::parseInt).toArray();
+		Arrays.stream(roomsToParse.split(",")).map(String::trim).mapToInt(Integer::parseInt)
+				.forEach(room -> bookingMap.put(room, new HashSet<>()));
 	}
 
 	/**
@@ -51,7 +45,8 @@ public class NonDbRepository implements Repository {
 		if (bookingMap.containsKey(room)) {
 			return bookingMap.get(room);
 		}
-		throw new NoSuchRoomException(getConfigInstance().formatProperty("exception.room_does_not_exist.text", room));
+		throw new NoSuchRoomException(
+				getConfigInstance().formatProperty(EXC_MSG_ROOM_DOES_NOT_EXIST.getPropertyKey(), room));
 	}
 
 	private static class SingletonHelper {
@@ -65,7 +60,7 @@ public class NonDbRepository implements Repository {
 	 * java.time.LocalDate)
 	 */
 	@Override
-	public boolean isAvailableRoom(Integer room, LocalDate date) throws NoSuchRoomException {
+	public boolean isRoomAvailable(Integer room, LocalDate date) throws NoSuchRoomException {
 		Set<Booking> bookings = getRoomBookings(room);
 		return bookings.stream().filter(b -> date.equals(b.getBookingDate())).count() == 0;
 	}
@@ -89,8 +84,7 @@ public class NonDbRepository implements Repository {
 	 * java.lang.Integer, java.time.LocalDate)
 	 */
 	@Override
-	public void addBooking(String guest, Integer room, LocalDate date)
-			throws NoSuchRoomException, RoomAlreadyBookedException {
+	public void addBooking(String guest, Integer room, LocalDate date) {
 		bookingMap.get(room).add(new Booking(guest, date));
 	}
 

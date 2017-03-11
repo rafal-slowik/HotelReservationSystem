@@ -26,7 +26,7 @@ public interface Repository {
 	 * @throws NoSuchRoomException
 	 *             in case when there is not such room
 	 */
-	public boolean isAvailableRoom(Integer room, LocalDate date) throws NoSuchRoomException;
+	public boolean isRoomAvailable(Integer room, LocalDate date) throws NoSuchRoomException;
 
 	/**
 	 * 
