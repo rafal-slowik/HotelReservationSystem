@@ -1,4 +1,4 @@
-package booking.manager.impl;
+package booking.manager;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
 import static booking.properties.ExceptionMessagesKeys.EXC_MSG_ROOM_ALREADY_BOOKED;
@@ -10,7 +10,6 @@ import com.google.common.base.Preconditions;
 
 import booking.exception.NoSuchRoomException;
 import booking.exception.RoomAlreadyBookedException;
-import booking.manager.BookingManager;
 import booking.repository.Repository;
 
 /**
