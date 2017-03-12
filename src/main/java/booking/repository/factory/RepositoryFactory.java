@@ -33,7 +33,7 @@ public class RepositoryFactory {
 	public Repository getFactory(RepositoryType type) {
 		if (type == null) {
 			throw new IllegalArgumentException(getConfigInstance()
-					.formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Factory type"));
+					.formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Repository type"));
 		}
 
 		// ready to add new types of repository
