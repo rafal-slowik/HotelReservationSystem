@@ -78,6 +78,6 @@ public class NonDbRepository implements Repository {
 	 */
 	@Override
 	public void addBooking(String guest, Integer room, LocalDate date) {
-		bookingMap.get(room).add(new Booking(guest, date));
+		bookingMap.get(room).add(new Booking(guest, room, date));
 	}
 }

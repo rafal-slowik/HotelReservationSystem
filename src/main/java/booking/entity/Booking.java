@@ -15,10 +15,12 @@ import java.time.LocalDate;
 public class Booking {
 
 	private LocalDate bookingDate;
+	private Integer roomNumber;
 	private String guestSurname;
 	
-	public Booking(String guestSurname, LocalDate bookingDate) {
+	public Booking(String guestSurname, Integer roomNumber, LocalDate bookingDate) {
 		this.guestSurname = guestSurname;
+		this.roomNumber = roomNumber;
 		this.bookingDate = bookingDate;
 	}
 	
@@ -30,6 +32,20 @@ public class Booking {
 
 	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
+	}
+	
+	/**
+	 * @return the roomNumber
+	 */
+	public Integer getRoomNumber() {
+		return roomNumber;
+	}
+	
+	/**
+	 * @param roomNumber the roomNumber to set
+	 */
+	public void setRoomNumber(Integer roomNumber) {
+		this.roomNumber = roomNumber;
 	}
 
 	public String getGuestSurname() {
@@ -46,6 +62,7 @@ public class Booking {
 		int result = 1;
 		result = prime * result + ((bookingDate == null) ? 0 : bookingDate.hashCode());
 		result = prime * result + ((guestSurname == null) ? 0 : guestSurname.hashCode());
+		result = prime * result + ((roomNumber == null) ? 0 : roomNumber.hashCode());
 		return result;
 	}
 
@@ -67,6 +84,11 @@ public class Booking {
 			if (other.guestSurname != null)
 				return false;
 		} else if (!guestSurname.equals(other.guestSurname))
+			return false;
+		if (roomNumber == null) {
+			if (other.roomNumber != null)
+				return false;
+		} else if (!roomNumber.equals(other.roomNumber))
 			return false;
 		return true;
 	}
