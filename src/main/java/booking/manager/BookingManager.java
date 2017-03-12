@@ -53,7 +53,7 @@ public interface BookingManager {
 	/**
 	 * 
 	 * @param date
-	 *            - availability date. <b>Must not be null</b>
+	 *            - availability date
 	 * @return a list of all the available room numbers for the given date.
 	 * 
 	 * @throws NullPointerException

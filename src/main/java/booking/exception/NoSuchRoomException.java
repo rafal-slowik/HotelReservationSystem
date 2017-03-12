@@ -4,6 +4,8 @@
 package booking.exception;
 
 /**
+ * Throws when there is not such room in the hotel.
+ * 
  * @author Rafal Slowik
  * @date 11 Mar 2017
  *

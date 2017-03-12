@@ -4,8 +4,11 @@
 package booking.exception;
 
 /**
+ * Throws when someone tries to make a reservation on the the room which is
+ * already booked on given date.
+ * 
  * @author Rafal Slowik
- * @date   11 Mar 2017
+ * @date 11 Mar 2017
  *
  */
 public class RoomAlreadyBookedException extends BookingException {

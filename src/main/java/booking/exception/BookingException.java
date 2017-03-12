@@ -4,6 +4,8 @@
 package booking.exception;
 
 /**
+ * Base exception of the application.
+ * 
  * @author Rafal Slowik
  * @date   11 Mar 2017
  *

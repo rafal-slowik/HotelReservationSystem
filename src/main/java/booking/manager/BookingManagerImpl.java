@@ -1,8 +1,9 @@
 package booking.manager;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
-import static booking.properties.ExceptionMessagesKeys.*;
-import static booking.repository.NonDbRepository.getRepositoryInstance;
+import static booking.properties.ExceptionMessagesKeys.EXC_MSG_PARAM_MUST_NOT_BE_NULL;
+import static booking.properties.ExceptionMessagesKeys.EXC_MSG_ROOM_ALREADY_BOOKED;
+import static booking.repository.factory.RepositoryType.NON_DB_BASED_IMPLEMENTATION;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ import com.google.common.base.Preconditions;
 import booking.exception.NoSuchRoomException;
 import booking.exception.RoomAlreadyBookedException;
 import booking.repository.Repository;
+import booking.repository.factory.RepositoryFactory;
 
 /**
  * @author Rafal Slowik
@@ -23,7 +25,8 @@ public class BookingManagerImpl implements BookingManager {
 	private Repository repository;
 
 	public BookingManagerImpl() {
-		repository = getRepositoryInstance();
+		RepositoryFactory factory = new RepositoryFactory();
+		repository = factory.getFactory(NON_DB_BASED_IMPLEMENTATION);
 	}
 
 	/*
@@ -34,8 +37,10 @@ public class BookingManagerImpl implements BookingManager {
 	 */
 	@Override
 	public boolean isRoomAvailable(Integer room, LocalDate date) throws NoSuchRoomException {
-		Preconditions.checkNotNull(room, getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given room number"));
-		Preconditions.checkNotNull(date, getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given date"));
+		Preconditions.checkNotNull(room, getConfigInstance()
+				.formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given room number"));
+		Preconditions.checkNotNull(date,
+				getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given date"));
 		return repository.isRoomAvailable(room, date);
 	}
 
@@ -67,7 +72,8 @@ public class BookingManagerImpl implements BookingManager {
 	 */
 	@Override
 	public Iterable<Integer> getAvailableRooms(LocalDate date) {
-		Preconditions.checkNotNull(date, getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given date"));
+		Preconditions.checkNotNull(date,
+				getConfigInstance().formatProperty(EXC_MSG_PARAM_MUST_NOT_BE_NULL.getPropertyKey(), "Given date"));
 		return repository.getAvailableRooms(date);
 	}
 }

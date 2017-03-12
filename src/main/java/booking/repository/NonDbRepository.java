@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -25,16 +24,14 @@ import booking.exception.NoSuchRoomException;
  */
 public class NonDbRepository implements Repository {
 
-	private Map<Integer, Set<Booking>> bookingMap = new ConcurrentHashMap<>();
+	private static Map<Integer, Set<Booking>> bookingMap = init();
 
-	private NonDbRepository() {
-		init();
-	}
-
-	private void init() {
+	private static Map<Integer, Set<Booking>> init() {
+		Map<Integer, Set<Booking>> map = new ConcurrentHashMap<>();
 		String roomsToParse = getConfigInstance().findByKey("rooms");
 		Arrays.stream(roomsToParse.split(",")).map(String::trim).mapToInt(Integer::parseInt)
-				.forEach(room -> bookingMap.put(room, new HashSet<>()));
+				.forEach(room -> map.put(room, new HashSet<>()));
+		return map;
 	}
 
 	/**
@@ -47,10 +44,6 @@ public class NonDbRepository implements Repository {
 		}
 		throw new NoSuchRoomException(
 				getConfigInstance().formatProperty(EXC_MSG_ROOM_DOES_NOT_EXIST.getPropertyKey(), room));
-	}
-
-	private static class SingletonHelper {
-		private static NonDbRepository INSTANCE = new NonDbRepository();
 	}
 
 	/*
@@ -74,7 +67,7 @@ public class NonDbRepository implements Repository {
 	public Set<Integer> getAvailableRooms(LocalDate date) {
 		return bookingMap.keySet().stream()
 				.filter(key -> bookingMap.get(key).stream().filter(b -> date.equals(b.getBookingDate())).count() == 0)
-				.collect(Collectors.toCollection(TreeSet::new));
+				.collect(Collectors.toCollection(HashSet::new));
 	}
 
 	/*
@@ -86,9 +79,5 @@ public class NonDbRepository implements Repository {
 	@Override
 	public void addBooking(String guest, Integer room, LocalDate date) {
 		bookingMap.get(room).add(new Booking(guest, date));
-	}
-
-	public static NonDbRepository getRepositoryInstance() {
-		return SingletonHelper.INSTANCE;
 	}
 }
