@@ -84,14 +84,11 @@
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>${version.maven-jxr.plugin}</version>
 			</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-report-plugin</artifactId>
-					<version>${version.surefire.plugin}</version>
-					<configuration>
-						<outputDirectory>${basedir}/target/newsite</outputDirectory>
-					</configuration>
-				</plugin>
-			</plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${version.surefire.plugin}</version>
+			</plugin>
+		</plugins>
 	</reporting>
 </project>
