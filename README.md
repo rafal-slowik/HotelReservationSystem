@@ -2,7 +2,7 @@
 Simple room reservation system<BR>
 
 To implementation used JDK 8.<BR><BR>
-To check out the project using git use following: <br />
+To check out the project use following command: <br />
 <b>git clone https://github.com/rafal-slowik/HotelReservationSystem.git</b>
 <br /><br />
 To build and run the tests you need to use maven in version 3:<br />
