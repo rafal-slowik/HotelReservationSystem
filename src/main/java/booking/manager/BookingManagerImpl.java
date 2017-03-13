@@ -1,8 +1,8 @@
 package booking.manager;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
-import static booking.properties.PropertyMessagesKeys.EXC_MSG_PARAM_MUST_NOT_BE_NULL;
-import static booking.properties.PropertyMessagesKeys.EXC_MSG_ROOM_ALREADY_BOOKED;
+import static booking.properties.PropertyMessageKeys.EXC_MSG_PARAM_MUST_NOT_BE_NULL;
+import static booking.properties.PropertyMessageKeys.EXC_MSG_ROOM_ALREADY_BOOKED;
 import static booking.repository.factory.RepositoryType.NON_DB_BASED_IMPLEMENTATION;
 
 import java.time.LocalDate;

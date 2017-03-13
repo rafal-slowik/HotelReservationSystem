@@ -4,7 +4,7 @@
 package booking.repository.factory;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
-import static booking.properties.PropertyMessagesKeys.*;
+import static booking.properties.PropertyMessageKeys.*;
 
 import booking.repository.NonDbRepository;
 import booking.repository.Repository;

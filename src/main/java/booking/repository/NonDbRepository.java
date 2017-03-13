@@ -4,7 +4,7 @@
 package booking.repository;
 
 import static booking.properties.ConfigProperties.getConfigInstance;
-import static booking.properties.PropertyMessagesKeys.EXC_MSG_ROOM_DOES_NOT_EXIST;
+import static booking.properties.PropertyMessageKeys.EXC_MSG_ROOM_DOES_NOT_EXIST;
 
 import java.time.LocalDate;
 import java.util.Arrays;
